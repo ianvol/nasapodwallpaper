@@ -2,9 +2,10 @@ import requests
 import ctypes
 import os
 
-# Replace this with your NASA API key
+# Replace this with your NASA API key if you wish to adapt this for your own use
 NASA_API_KEY = "3tOoFEPcBizjtpBoxv5vZE2lRRRnhaWXZGeZaidL"
 
+# Fetches data from API
 def get_apod_data():
     url = f"https://api.nasa.gov/planetary/apod?api_key={NASA_API_KEY}"
     response = requests.get(url)
@@ -14,6 +15,7 @@ def get_apod_data():
         print("Failed to fetch APOD data.")
         return None
 
+# Method to download image, exception thrown if download failed
 def download_image(url, save_path):
     try:
         response = requests.get(url)
@@ -27,6 +29,7 @@ def set_wallpaper(image_path):
     SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
 
+# Main method that takes API data and locates relevant links
 if __name__ == "__main__":
     apod_data = get_apod_data()
     if apod_data:
